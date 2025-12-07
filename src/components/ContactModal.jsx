@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Mail, Instagram, Phone, Shield, Send } from 'lucide-react';
+import { X, Mail, Instagram, Phone, Shield, Send, Lock } from 'lucide-react';
 
 const ContactModal = ({ isOpen, onClose }) => {
     const [challengeStep, setChallengeStep] = useState('menu'); // menu, challenge, revealed
@@ -9,8 +9,8 @@ const ContactModal = ({ isOpen, onClose }) => {
 
     const handleChallenge = (e) => {
         e.preventDefault();
-        // Simple challenge: Port 443
-        if (answer.trim() === '443') {
+        // Password protection
+        if (answer.toLowerCase().trim() === 'don') {
             setChallengeStep('revealed');
             setError(false);
         } else {
@@ -114,17 +114,16 @@ const ContactModal = ({ isOpen, onClose }) => {
                             <div className="space-y-4">
                                 <div className="text-center mb-6">
                                     <Lock className="w-12 h-12 mx-auto text-cyber-accent mb-2 animate-pulse" />
-                                    <h3 className="text-xl font-mono font-bold text-cyber-text">Security Check</h3>
-                                    <p className="text-cyber-muted text-sm mt-2">To access the phone number, answer this:</p>
-                                    <p className="text-cyber-accent font-mono mt-2 text-lg">"What is the standard port for HTTPS?"</p>
+                                    <h3 className="text-xl font-mono font-bold text-cyber-text">Restricted Access</h3>
+                                    <p className="text-cyber-muted text-sm mt-2">Enter override password to decrypt contact line.</p>
                                 </div>
 
                                 <form onSubmit={handleChallenge} className="relative">
                                     <input
-                                        type="text"
+                                        type="password"
                                         value={answer}
                                         onChange={(e) => setAnswer(e.target.value)}
-                                        placeholder="Enter port number..."
+                                        placeholder="Enter password..."
                                         className={`w-full bg-black/50 border ${error ? 'border-red-500 animate-shake' : 'border-cyber-muted/30 focus:border-cyber-accent'} rounded p-3 text-center font-mono text-xl outline-none transition-colors`}
                                         autoFocus
                                     />
@@ -166,9 +165,9 @@ const ContactModal = ({ isOpen, onClose }) => {
                             </div>
                         )}
                     </motion.div>
-                </div>
+                </div >
             )}
-        </AnimatePresence>
+        </AnimatePresence >
     );
 };
 

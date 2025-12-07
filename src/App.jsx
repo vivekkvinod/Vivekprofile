@@ -7,6 +7,7 @@ import Skills from './components/Skills';
 import Certifications from './components/Certifications';
 import Footer from './components/Footer';
 import MouseParticles from './components/MouseParticles';
+import CyberWidget from './components/CyberWidget';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Experience />
         <Skills />
         <Certifications />
+        <CyberWidget />
       </main>
       <Footer />
     </Layout>
