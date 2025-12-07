@@ -1,0 +1,149 @@
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 80px;
+    /* Navbar height */
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    flex: 1;
+    max-width: 600px;
+    z-index: 2;
+}
+
+.greeting {
+    font-size: 1.5rem;
+    color: var(--accent-gradient);
+    margin-bottom: 1rem;
+    font-weight: 500;
+    display: inline-block;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.name {
+    font-size: 5rem;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    background: linear-gradient(to right, #fff, #aaa);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.role {
+    font-size: 2.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.gradient-text {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bio {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+    max-width: 500px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1.5rem;
+}
+
+/* Visuals */
+.hero-visual {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.image-container {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-img {
+    width: 350px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
+    border: 4px solid rgba(99, 102, 241, 0.3);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.glow-circle {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--accent-gradient);
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.4;
+    animation: pulse 5s ease-in-out infinite alternate;
+    z-index: 1;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.9);
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: scale(1.05);
+        opacity: 0.5;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding-top: 120px;
+        gap: 3rem;
+    }
+
+    .name {
+        font-size: 3.5rem;
+    }
+
+    .role {
+        font-size: 1.8rem;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .image-container {
+        width: 300px;
+        height: 300px;
+    }
+
+    .profile-img {
+        width: 250px;
+        height: 250px;
+    }
+}

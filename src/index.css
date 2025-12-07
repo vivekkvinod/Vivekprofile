@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cyber-dark: #0a0a0f;
+  --color-cyber-slate: #1a1a2e;
+  --color-cyber-accent: #00f0ff;
+  --color-cyber-purple: #bc13fe;
+  --color-cyber-text: #e0e0e0;
+  --color-cyber-muted: #a0a0b0;
+
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "Fira Code", monospace;
+
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+}
+
+@utility text-glow {
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+}
+
+@utility glass-card {
+  @apply bg-cyber-slate/50 backdrop-blur-md border border-white/5 shadow-xl;
+}
+
+@utility cyber-border {
+  @apply border border-cyber-accent/30 hover:border-cyber-accent/60 transition-colors duration-300;
+}
+
+@layer base {
+  body {
+    @apply bg-cyber-dark text-cyber-text antialiased;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-cyber-dark;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-cyber-slate rounded-full border border-cyber-accent/20;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-cyber-accent/40;
+  }
+}
