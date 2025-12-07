@@ -1,4 +1,4 @@
-import { Linkedin, Mail } from 'lucide-react';
+import { Linkedin, Mail, Instagram } from 'lucide-react';
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
@@ -9,6 +9,9 @@ const Footer = () => {
                 <div className="flex justify-center gap-8 mb-8">
                     <a href="https://linkedin.com/in/vivekkv10" target="_blank" rel="noopener noreferrer" className="text-cyber-muted hover:text-cyber-accent transition-colors">
                         <Linkedin size={24} />
+                    </a>
+                    <a href="https://www.instagram.com/_vivek_k_v_/" target="_blank" rel="noopener noreferrer" className="text-cyber-muted hover:text-cyber-accent transition-colors">
+                        <Instagram size={24} />
                     </a>
                     <a href="mailto:vivekvinod422@gmail.com" className="text-cyber-muted hover:text-cyber-accent transition-colors">
                         <Mail size={24} />

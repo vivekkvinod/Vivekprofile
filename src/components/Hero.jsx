@@ -1,12 +1,15 @@
 import { motion } from 'framer-motion';
-import { Terminal, Shield, Lock, ChevronDown } from 'lucide-react';
+import { Terminal, Shield, Lock, ChevronDown, Instagram } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import profileImg from '../assets/profile.png';
+import ContactModal from './ContactModal';
+import HackerText from './HackerText';
 
 const Hero = () => {
     const [text, setText] = useState('');
     const fullText = "SOC Analyst";
     const [index, setIndex] = useState(0);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         if (index < fullText.length) {
@@ -38,7 +41,7 @@ const Hero = () => {
                     <div className="inline-block p-2 px-4 rounded-full bg-cyber-accent/10 border border-cyber-accent/20 text-cyber-accent mb-6 animate-float">
                         <span className="flex items-center gap-2 text-sm font-mono">
                             <span className="w-2 h-2 rounded-full bg-cyber-accent animate-pulse"></span>
-                            SYSTEM ONLINE // READY FOR DUTY
+                            <HackerText text="SYSTEM ONLINE // READY FOR DUTY" />
                         </span>
                     </div>
 
@@ -67,15 +70,15 @@ const Hero = () => {
                     </div>
 
                     <div className="flex flex-col md:flex-row gap-4 justify-center">
-                        <motion.a
-                            href="mailto:vivekvinod422@gmail.com"
+                        <motion.button
+                            onClick={() => setIsModalOpen(true)}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="px-8 py-3 bg-cyber-accent text-cyber-dark font-bold rounded hover:bg-cyan-300 transition-colors flex items-center justify-center gap-2"
+                            className="px-8 py-3 bg-cyber-accent text-cyber-dark font-bold rounded hover:bg-cyan-300 transition-colors flex items-center justify-center gap-2 cursor-pointer"
                         >
                             <Shield size={20} />
                             Contact Securely
-                        </motion.a>
+                        </motion.button>
                         <motion.a
                             href="#experience"
                             whileHover={{ scale: 1.05 }}
@@ -97,6 +100,8 @@ const Hero = () => {
             >
                 <ChevronDown />
             </motion.div>
+
+            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </section>
     );
 };

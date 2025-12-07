@@ -6,10 +6,12 @@ import Experience from './components/Experience';
 import Skills from './components/Skills';
 import Certifications from './components/Certifications';
 import Footer from './components/Footer';
+import MouseParticles from './components/MouseParticles';
 
 function App() {
   return (
     <Layout>
+      <MouseParticles />
       <Header />
       <main>
         <Hero />
