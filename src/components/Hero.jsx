@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Terminal, Shield, Lock, ChevronDown } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import profileImg from '../assets/profile.png';
 
 const Hero = () => {
     const [text, setText] = useState('');
@@ -59,7 +60,7 @@ const Hero = () => {
                     <div className="mb-8 relative inline-block">
                         <div className="absolute inset-0 bg-cyber-accent/20 blur-xl rounded-full"></div>
                         <img
-                            src="/src/assets/profile.png"
+                            src={profileImg}
                             alt="Vivek K Vinod"
                             className="w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-cyber-accent/50 object-cover relative z-10 shadow-[0_0_20px_rgba(0,240,255,0.3)] mx-auto"
                         />
