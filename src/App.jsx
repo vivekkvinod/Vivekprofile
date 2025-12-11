@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Layout from './components/Layout';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -15,6 +15,14 @@ import { SettingsProvider } from './context/SettingsContext';
 
 function App() {
   const [isPhotosOpen, setIsPhotosOpen] = useState(false);
+
+  // Force scroll to top on refresh/load
+  useEffect(() => {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <SettingsProvider>
