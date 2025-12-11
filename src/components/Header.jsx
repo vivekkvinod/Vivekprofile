@@ -112,14 +112,13 @@ const Header = ({ onOpenPhotos }) => {
                     >
                         <div className="flex flex-col p-6 gap-4">
                             {navItems.map((item) => (
-                                <a
+                                <button
                                     key={item.name}
-                                    href={item.href}
-                                    className="text-cyber-text hover:text-cyber-accent py-3 block border-l-2 border-transparent hover:border-cyber-accent pl-4 transition-all text-lg font-medium"
+                                    className="text-left w-full text-cyber-text hover:text-cyber-accent py-3 block border-l-2 border-transparent hover:border-cyber-accent pl-4 transition-all text-lg font-medium"
                                     onClick={(e) => scrollToSection(e, item.href)}
                                 >
                                     {item.name}
-                                </a>
+                                </button>
                             ))}
                             <button
                                 onClick={() => {
