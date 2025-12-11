@@ -34,7 +34,8 @@ const Header = ({ onOpenPhotos }) => {
     ];
 
     return (
-        <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-cyber-dark/80 backdrop-blur-md border-b border-cyber-accent/10' : 'bg-transparent'}`}>
+    return (
+        <header className={`fixed top-0 w-full z-[100] transition-all duration-300 ${scrolled || isOpen ? 'bg-cyber-dark/95 backdrop-blur-md border-b border-cyber-accent/10' : 'bg-transparent'}`}>
             <div className="container mx-auto px-6 py-4 flex items-center justify-between">
 
                 {/* Logo area */}
@@ -95,6 +96,7 @@ const Header = ({ onOpenPhotos }) => {
                 <button
                     className="md:hidden text-cyber-text"
                     onClick={() => setIsOpen(!isOpen)}
+                    aria-label="Toggle menu"
                 >
                     {isOpen ? <X /> : <Menu />}
                 </button>
@@ -107,14 +109,14 @@ const Header = ({ onOpenPhotos }) => {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden bg-cyber-slate border-b border-cyber-accent/20"
+                        className="md:hidden bg-cyber-dark/95 border-b border-cyber-accent/20 overflow-hidden"
                     >
                         <div className="flex flex-col p-6 gap-4">
                             {navItems.map((item) => (
                                 <a
                                     key={item.name}
                                     href={item.href}
-                                    className="text-cyber-text hover:text-cyber-accent py-2 block border-l-2 border-transparent hover:border-cyber-accent pl-4 transition-all"
+                                    className="text-cyber-text hover:text-cyber-accent py-3 block border-l-2 border-transparent hover:border-cyber-accent pl-4 transition-all text-lg font-medium"
                                     onClick={(e) => scrollToSection(e, item.href)}
                                 >
                                     {item.name}
@@ -126,7 +128,7 @@ const Header = ({ onOpenPhotos }) => {
                                     onOpenPhotos();
                                     setIsOpen(false);
                                 }}
-                                className="text-left w-full text-cyber-text hover:text-cyber-accent py-2 block border-l-2 border-transparent hover:border-cyber-accent pl-4 transition-all"
+                                className="text-left w-full text-cyber-text hover:text-cyber-accent py-3 block border-l-2 border-transparent hover:border-cyber-accent pl-4 transition-all text-lg font-medium"
                             >
                                 Photos
                             </button>
