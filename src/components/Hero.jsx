@@ -4,12 +4,15 @@ import { useState, useEffect } from 'react';
 import profileImg from '../assets/profile.png';
 import ContactModal from './ContactModal';
 import HackerText from './HackerText';
+import MatrixRain from './MatrixRain';
+import useSound from '../hooks/useSound';
 
 const Hero = () => {
     const [text, setText] = useState('');
     const fullText = "SOC Analyst";
     const [index, setIndex] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const { playHover, playClick } = useSound();
 
     useEffect(() => {
         if (index < fullText.length) {
@@ -23,10 +26,8 @@ const Hero = () => {
 
     return (
         <section className="relative h-screen flex items-center justify-center overflow-hidden pt-16">
-            {/* Background Grid Animation */}
-            <div className="absolute inset-0 z-0 opacity-20">
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-            </div>
+            {/* Matrix Rain Background */}
+            <MatrixRain />
 
             {/* Glowing Orbs */}
             <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-cyber-accent/20 rounded-full blur-[100px] animate-pulse-slow"></div>
@@ -71,7 +72,8 @@ const Hero = () => {
 
                     <div className="flex flex-col md:flex-row gap-4 justify-center">
                         <motion.button
-                            onClick={() => setIsModalOpen(true)}
+                            onClick={() => { playClick(); setIsModalOpen(true); }}
+                            onMouseEnter={playHover}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             className="px-8 py-3 bg-cyber-accent text-cyber-dark font-bold rounded hover:bg-cyan-300 transition-colors flex items-center justify-center gap-2 cursor-pointer"
@@ -81,6 +83,8 @@ const Hero = () => {
                         </motion.button>
                         <motion.a
                             href="#experience"
+                            onClick={playClick}
+                            onMouseEnter={playHover}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             className="px-8 py-3 border border-cyber-muted/30 text-cyber-text rounded hover:bg-white/5 transition-colors flex items-center justify-center gap-2"

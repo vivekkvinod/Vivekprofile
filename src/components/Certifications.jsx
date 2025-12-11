@@ -1,92 +1,197 @@
-import { motion } from 'framer-motion';
-import { Award, GraduationCap } from 'lucide-react';
+import { useRef } from 'react';
+import { motion, useMotionTemplate, useMotionValue, useSpring } from 'framer-motion';
+import { Award, ExternalLink } from 'lucide-react';
+
+const Card = ({ title, issuer, year, id }) => {
+    const ref = useRef(null);
+
+    // Mouse position state
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
+
+    const mouseXSpring = useSpring(x);
+    const mouseYSpring = useSpring(y);
+
+    const rotateX = useMotionTemplate`calc(${mouseYSpring} * -0.5deg)`;
+    const rotateY = useMotionTemplate`calc(${mouseXSpring} * 0.5deg)`;
+
+    const handleMouseMove = (e) => {
+        if (!ref.current) return;
+
+        const rect = ref.current.getBoundingClientRect();
+
+        const width = rect.width;
+        const height = rect.height;
+
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        const xPct = mouseX / width - 0.5;
+        const yPct = mouseY / height - 0.5;
+
+        x.set(xPct * 20); // Sensitivity
+        y.set(yPct * 20);
+    };
+
+    const handleMouseLeave = () => {
+        x.set(0);
+        y.set(0);
+    };
+
+    return (
+        <motion.div
+            ref={ref}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            style={{
+                rotateX,
+                rotateY,
+                transformStyle: "preserve-3d"
+            }}
+            className="relative h-64 w-full rounded-xl bg-gradient-to-br from-cyber-slate/80 to-cyber-dark/80 border border-cyber-accent/30 group cursor-pointer"
+        >
+            <div
+                style={{
+                    transform: "translateZ(50px)",
+                    transformStyle: "preserve-3d"
+                }}
+                className="absolute inset-0 flex flex-col justify-between p-6"
+            >
+                <div className="flex justify-between items-start">
+                    <Award className="text-cyber-accent w-10 h-10 drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]" />
+                    <span className="font-mono text-xs text-cyber-muted opacity-50">{year}</span>
+                </div>
+
+                <div>
+                    <h3 className="text-xl font-bold text-white mb-2 leading-tight group-hover:text-cyber-accent transition-colors">
+                        {title}
+                    </h3>
+                    <p className="text-sm text-cyber-muted font-mono">{issuer}</p>
+                </div>
+
+                <div className="flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span className="text-xs font-mono text-cyber-accent">ID: {id}</span>
+                    <ExternalLink size={16} className="text-white hover:text-cyber-accent" />
+                </div>
+            </div>
+
+            {/* Holographic Gradient Overlay */}
+            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none mix-blend-overlay" />
+        </motion.div>
+    );
+};
 
 const Certifications = () => {
     const certs = [
-        "Microsoft Certified: Azure Fundamentals (AZ-900)",
-        "Proofpoint Certified Phishing Specialist (2025)",
-        "Proofpoint Certified Email Authentication Specialist (2025)",
-        "ArcX Cyber Threat Intelligence 101"
+        {
+            title: "Microsoft Certified: Azure Fundamentals (AZ-900)",
+            issuer: "Microsoft",
+            year: "2023",
+            id: "AZ-900"
+        },
+        {
+            title: "Proofpoint Certified Phishing Specialist",
+            issuer: "Proofpoint",
+            year: "2025",
+            id: "PFPT-CPS"
+        },
+        {
+            title: "Proofpoint Certified Email Authentication Specialist",
+            issuer: "Proofpoint",
+            year: "2025",
+            id: "PFPT-CEAS"
+        },
+        {
+            title: "ArcX Cyber Threat Intelligence 101",
+            issuer: "ArcX",
+            year: "2024",
+            id: "ARCX-CTI"
+        }
     ];
 
     const awards = [
         {
             title: "USTAR Shining Star",
-            desc: "Perfect 10/10 NPS from client"
+            issuer: "UST Global",
+            year: "2024",
+            id: "CLIENT-NPS-10"
         },
         {
             title: "USTAR Super Star",
-            desc: "Exceptional dedication in incident response"
+            issuer: "UST Global",
+            year: "2024",
+            id: "INCIDENT-RESPONSE"
         },
         {
-            title: "USTAR3 – July 2025",
-            desc: "Contained critical threat in live response"
+            title: "USTAR3 Award",
+            issuer: "UST Global",
+            year: "July 2025",
+            id: "CRITICAL-THREAT"
+        }
+    ];
+
+    const education = [
+        {
+            title: "B.Tech in Computer Science and Engineering",
+            issuer: "Sahrdaya College of Engineering",
+            year: "2019 - 2023",
+            id: "CGPA: 7.45"
         }
     ];
 
     return (
-        <section id="certifications" className="py-20 relative overflow-hidden">
-            <div className="absolute inset-0 bg-cyber-accent/5 skew-y-3 transform origin-bottom-right"></div>
+        <section id="certifications" className="py-20 bg-cyber-dark/50 overflow-hidden relative">
+            <div className="container mx-auto px-6">
 
-            <div className="container mx-auto px-6 relative z-10">
-                <div className="grid md:grid-cols-2 gap-12">
-                    {/* Education & Certs */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                    >
-                        <div className="flex items-center gap-3 mb-8">
-                            <Award className="text-cyber-purple" size={28} />
-                            <h2 className="text-2xl font-bold">Certifications & Education</h2>
-                        </div>
+                {/* Certifications */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    className="mb-12"
+                >
+                    <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
+                        <Award className="text-cyber-accent" />
+                        Certifications
+                    </h2>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 perspective-1000">
+                        {certs.map((cert, i) => (
+                            <Card key={i} {...cert} />
+                        ))}
+                    </div>
+                </motion.div>
 
-                        <div className="space-y-6">
-                            <div className="glass-card p-6 rounded-xl cyber-border">
-                                <h3 className="text-lg font-bold text-white mb-4">Certifications</h3>
-                                <ul className="space-y-3">
-                                    {certs.map((cert, i) => (
-                                        <li key={i} className="flex items-center gap-3 text-cyber-muted text-sm">
-                                            <span className="w-1.5 h-1.5 bg-cyber-purple rounded-full"></span>
-                                            {cert}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
+                {/* Awards */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    className="mb-12"
+                >
+                    <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
+                        <Award className="text-yellow-400" />
+                        Honors & Awards
+                    </h2>
+                    <div className="grid md:grid-cols-3 gap-6 perspective-1000">
+                        {awards.map((award, i) => (
+                            <Card key={i} {...award} />
+                        ))}
+                    </div>
+                </motion.div>
 
-                            <div className="glass-card p-6 rounded-xl cyber-border">
-                                <div className="flex items-center gap-2 mb-4 text-cyber-accent">
-                                    <GraduationCap size={20} />
-                                    <h3 className="text-lg font-bold">Education</h3>
-                                </div>
-                                <h4 className="text-white font-medium">B.Tech in Computer Science and Engineering</h4>
-                                <p className="text-cyber-muted text-sm">Sahrdaya College of Engineering and Technology</p>
-                                <p className="text-cyber-muted/60 text-xs mt-1">2019 – 2023 | CGPA: 7.45</p>
-                            </div>
-                        </div>
-                    </motion.div>
-
-                    {/* Awards */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                    >
-                        <div className="flex items-center gap-3 mb-8">
-                            <Award className="text-yellow-400" size={28} />
-                            <h2 className="text-2xl font-bold">Honors & Awards</h2>
-                        </div>
-
-                        <div className="grid gap-4">
-                            {awards.map((award, index) => (
-                                <div key={index} className="glass-card p-4 rounded-lg border-l-4 border-yellow-400/50">
-                                    <h3 className="font-bold text-white">{award.title}</h3>
-                                    <p className="text-cyber-muted text-sm">{award.desc}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </motion.div>
-                </div>
+                {/* Education */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                >
+                    <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
+                        <ExternalLink className="text-cyber-purple" />
+                        Education
+                    </h2>
+                    <div className="max-w-2xl perspective-1000">
+                        {education.map((edu, i) => (
+                            <Card key={i} {...edu} />
+                        ))}
+                    </div>
+                </motion.div>
             </div>
         </section>
     );

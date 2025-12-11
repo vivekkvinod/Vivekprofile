@@ -1,76 +1,96 @@
 import { motion } from 'framer-motion';
-import { Briefcase, Calendar, CheckCircle2 } from 'lucide-react';
+import { Terminal, Calendar, AlertTriangle, ShieldCheck } from 'lucide-react';
 
 const Experience = () => {
-    const experiences = [
+    const logs = [
         {
+            date: "2024-05-01",
+            level: "INIT_SESSION",
             title: "SOC Analyst – Associate 1",
             company: "UST Global",
-            period: "May 2024 – Present",
             location: "Thiruvananthapuram",
-            responsibilities: [
-                "Performed email analysis and classified messages as phishing, spam, or safe based on threat indicators.",
-                "Investigated risky sign-ins and abnormal user behavior through Azure IAM and Entra ID logs.",
-                "Worked with Elysium Analytics SIEM platform to analyze and correlate security alerts.",
-                "Investigated Defender alerts for malware, phishing, and lateral movement; validated true positives and escalated critical cases.",
-                "Leveraged Microsoft Sentinel for real-time security event monitoring and incident triage using KQL.",
-                "Mitigated phishing emails and spoofed senders using Mimecast.",
-                "Conducted endpoint threat remediation using Malwarebytes Nebula.",
-                "Supported users remotely for Netskope VPN and access issues.",
-                "Developed automation use cases for repetitive SOC tasks.",
-                "Prepared detailed weekly/monthly client reports on incident trends and SLA metrics."
+            events: [
+                { type: "INFO", msg: "Analyzed phishing threat vectors in email gateway." },
+                { type: "WARN", msg: "Investigated risky sign-ins (Azure IAM / Entra ID)." },
+                { type: "SUCCESS", msg: "Correlated security alerts via Elysium Analytics SIEM." },
+                { type: "CRITICAL", msg: "Escalated validated true positives from Defender XDR." },
+                { type: "SYSTEM", msg: "Deployed automation logic for routine SOC tasks." },
+                { type: "METRIC", msg: "Generated weekly SLA reports on incident trends." }
             ]
         }
     ];
 
     return (
-        <section id="experience" className="py-20 relative">
-            <div className="container mx-auto px-6">
+        <section id="experience" className="py-20 bg-black/40 border-y border-cyber-accent/10">
+            <div className="container mx-auto px-6 max-w-5xl">
                 <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    className="flex items-center gap-3 mb-12"
+                    className="flex items-center gap-3 mb-10"
                 >
-                    <Briefcase className="text-cyber-accent" size={28} />
-                    <h2 className="text-3xl font-bold">Professional Experience</h2>
+                    <Terminal className="text-cyber-accent" size={28} />
+                    <h2 className="text-3xl font-bold font-mono">SYSTEM_AUDIT_LOGS</h2>
                 </motion.div>
 
-                <div className="relative border-l-2 border-cyber-accent/20 ml-4 max-w-4xl">
-                    {experiences.map((exp, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, x: 20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.2 }}
-                            className="mb-12 pl-8 relative"
-                        >
-                            <div className="absolute w-4 h-4 bg-cyber-accent rounded-full -left-[9px] top-0 shadow-[0_0_10px_rgba(0,240,255,0.5)]"></div>
+                <div className="bg-black/90 rounded-lg border border-cyber-accent/30 p-6 font-mono text-sm md:text-base shadow-[0_0_30px_rgba(0,0,0,0.5)] overflow-hidden">
+                    {/* Log Header */}
+                    <div className="flex border-b border-cyber-accent/20 pb-4 mb-4 text-cyber-muted uppercase text-xs tracking-wider">
+                        <div className="w-32 md:w-48">Timestamp</div>
+                        <div className="w-24 md:w-32">Level</div>
+                        <div className="flex-1">Message</div>
+                    </div>
 
-                            <div className="glass-card p-8 rounded-xl cyber-border">
-                                <div className="flex flex-col md:flex-row md:items-center justify-between mb-6">
-                                    <div>
-                                        <h3 className="text-xl font-bold text-white">{exp.title}</h3>
-                                        <p className="text-cyber-accent font-medium">{exp.company}</p>
-                                    </div>
-                                    <div className="flex items-center gap-2 text-cyber-muted text-sm mt-2 md:mt-0">
-                                        <Calendar size={16} />
-                                        <span>{exp.period}</span>
-                                    </div>
+                    {/* Log content */}
+                    {logs.map((log, index) => (
+                        <div key={index}>
+                            {/* Role Entry */}
+                            <motion.div
+                                initial={{ opacity: 0, x: -10 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                className="flex flex-col md:flex-row mb-6 text-cyber-accent"
+                            >
+                                <div className="w-32 md:w-48 shrink-0 opacity-70">[{log.date}]</div>
+                                <div className="w-24 md:w-32 shrink-0 font-bold text-cyber-purple">{log.level}</div>
+                                <div>
+                                    <span className="font-bold">{log.title}</span> @ {log.company}
+                                    <div className="text-xs text-cyber-muted mt-1 opacity-50">{log.location}</div>
                                 </div>
+                            </motion.div>
 
-                                <ul className="space-y-3">
-                                    {exp.responsibilities.map((resp, i) => (
-                                        <li key={i} className="flex gap-3 text-cyber-muted text-sm leading-relaxed">
-                                            <CheckCircle2 size={16} className="text-cyber-accent/50 shrink-0 mt-1" />
-                                            <span>{resp}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </motion.div>
+                            {/* Details */}
+                            {log.events.map((event, i) => (
+                                <motion.div
+                                    key={i}
+                                    initial={{ opacity: 0 }}
+                                    whileInView={{ opacity: 1 }}
+                                    transition={{ delay: i * 0.05 }}
+                                    className="flex flex-col md:flex-row py-2 hover:bg-white/5 transition-colors border-l border-cyber-accent/10 ml-2 md:ml-0 pl-4 md:pl-0"
+                                >
+                                    <div className="w-32 md:w-48 shrink-0 text-cyber-muted/50 text-xs py-1 font-mono hidden md:block">
+                                        {`+${(i + 1).toString().padStart(4, '0')}ms`}
+                                    </div>
+                                    <div className={`w-24 md:w-32 shrink-0 font-bold text-xs py-1 ${event.type === 'CRITICAL' ? 'text-red-500' :
+                                            event.type === 'WARN' ? 'text-yellow-500' :
+                                                event.type === 'SUCCESS' ? 'text-green-500' :
+                                                    'text-blue-400'
+                                        }`}>
+                                        [{event.type}]
+                                    </div>
+                                    <div className="flex-1 text-cyber-text/80">
+                                        {event.msg}
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
                     ))}
+
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        className="mt-6 pt-4 border-t border-cyber-accent/20 text-cyber-accent animate-pulse"
+                    >
+                        > _ WAITING FOR NEW INPUT...
+                    </motion.div>
                 </div>
             </div>
         </section>
